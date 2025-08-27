@@ -1,0 +1,33 @@
+
+
+
+@media(min-width: 600px) {
+.product-list {
+    display: grid;
+    grid-template-columns: 75% 25%;
+    gap: 1em;
+}
+.products{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 1em;
+}
+.product{
+    flex: 1 1 45%;
+    margin: 0.5em;
+}
+.cart {
+    margin-top: 2em;
+    padding: 1em;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+}
+@media(min-width: 900px) {
+    .product{
+        flex: 1 1 30%;
+    }
+}
