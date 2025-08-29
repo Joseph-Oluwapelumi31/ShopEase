@@ -1,4 +1,6 @@
-
+body{
+    background-color: var(--color-rose-100);
+}
 
 
 @media(min-width: 600px) {
@@ -22,8 +24,10 @@
 .cart {
     margin-top: 2em;
     padding: 1em;
-    border: 1px solid #ccc;
     border-radius: 8px;
+    height: auto;
+    align-self: start;
+    background-color: var(--color-rose-50);
 }
 }
 @media(min-width: 900px) {

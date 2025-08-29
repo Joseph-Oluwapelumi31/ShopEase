@@ -13,6 +13,11 @@
   --font-medium: 500;
   --font-bold: 700;
 }
+*{
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 body{
   font-family: var(--font-family);
 }
