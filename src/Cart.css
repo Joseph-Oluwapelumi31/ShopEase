@@ -100,7 +100,7 @@ hr{
 }
 .confirm-order-button{
     background-color: var(--color-rose-500);
-    color: white;
+    color: rgba(255, 255, 255, 0.623);
     border: none;
     padding: 0.8em 1.2em;
     border-radius: 8px;
@@ -111,4 +111,8 @@ hr{
     border-radius: 1em;
     margin-top: 1em;
 
+}
+.confirm-order-button:hover{
+    background-color: var(--color-red);
+    color: white;
 }

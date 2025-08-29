@@ -1,5 +1,14 @@
 import './Cart.css';
-export default function Cart({ cart }) {
+import { useState } from 'react';
+import ConfirmOrder from './ConfirmOrder';
+export default function Cart({ cart, removeFromCart}) {
+    const [isConfirming, setIsConfirming] = useState(false);
+    const showConfirmOrder = () => {
+        setIsConfirming(true);
+    };
+    const remove = (product) => {
+        removeFromCart(product);
+    };
     return (
 
         <div className="cart">
@@ -20,8 +29,8 @@ export default function Cart({ cart }) {
                                             <p className='product-total'>${item.totalPrice}</p>
                                         </div>
                                     </div>
-                                    
-                                    <button className="remove-item-button">
+
+                                    <button className="remove-item-button" onClick={() => remove(item)}>
                                         <img src="assets/images/icon-remove-item.svg" alt="remove item" />
                                     </button>
                                 </div>
@@ -34,13 +43,14 @@ export default function Cart({ cart }) {
                 <div className="order-summary">
                     <div className="order-total-container">
                         <p className="order-total-label">Order Total</p>
-                        <h3 className="order-total-amount">$46.00</h3>
+                        <h3 className="order-total-amount">${cart.reduce((acc, item) => acc + item.totalPrice, 0)}</h3>
                     </div>
                     <div className="carbon-neutral">
                         <img src="assets/images/icon-carbon-neutral.svg" alt="" />
                         <p>This is a <span className="carbon-neutral-span-element">carbon neutral</span> delivery</p>
                     </div>
-                    <button className="confirm-order-button">Confirm order</button>
+                    <button className="confirm-order-button" onClick={showConfirmOrder}>Confirm order</button>
+                    {isConfirming && <ConfirmOrder cart={cart} isConfirming={isConfirming} setIsConfirming={setIsConfirming} />}
                 </div>
             </div> ) : (
                 <div className="empty-cart cart-container">

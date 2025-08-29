@@ -4,18 +4,32 @@ import Cart from "./Cart"
 import { useEffect, useState } from "react"
 export default function ProductList() {
     const [products, setProducts] = useState([])
-    const [cart, setCart] = useState([])
+    const savedCart = ()=>{
+        const getcart = localStorage.getItem('cart')
+        return savedCart ? JSON.parse(getcart) : [];
+    }
+    const [cart, setCart] = useState(savedCart)
+    useEffect(()=>{
+        localStorage.setItem('cart', JSON.stringify(cart))
+    },[cart])
+    
     const increaseCartCount = (product)=>{
 
         setCart(prevCart=>{
             const existing = prevCart.find(item=> item.id === product.id )
             if(existing){
-                // alert('true')
                 return prevCart.map(item=>
-                    item.id === product.id ? {...item, quantity: item.quantity+1 , totalPrice: item.price*(item.quantity+1)} : item
+                    item.id === product.id ? {...item,
+                         sumTotal: prevCart.reduce((acc, item) => acc + item.totalPrice, 0), 
+                         quantity: item.quantity+1 ,
+                         totalPrice: item.price*(item.quantity+1)}
+                         : item
                 )
             }
-           return [...prevCart, {...product, quantity:1, totalPrice: product.price}]
+           return [...prevCart, {...product,
+            quantity:1,
+            totalPrice: product.price,
+            sumTotal: prevCart.reduce((acc, item) => acc + item.totalPrice, 0) + product.price}]
         })
     }
     const decreaseCartCount = (product)=>{
@@ -26,7 +40,11 @@ export default function ProductList() {
             ).filter(item=> item.quantity > 0)
         })
     }
-    
+    const removeFromCart = (product) => {
+        setCart(prevCart => {
+            return prevCart.filter(item => item.id !== product.id)
+        })
+    }
 
     useEffect(() => {
         fetch('/data.json')
@@ -34,10 +52,9 @@ export default function ProductList() {
             .then(data => setProducts(data))
     }
     , [])
-    // useEffect(() => {
-    //     console.log(cart)}
-    // , [cart])
+    
     return (
+        <>
         <div className="product-list">
             <div>
             <h1>Desserts</h1>
@@ -53,8 +70,10 @@ export default function ProductList() {
                 ))}
             </div>
             </div>
-            <Cart cart={cart} />
+            <Cart cart={cart} removeFromCart={removeFromCart} />
 
         </div>
+
+        </>
     )
 }

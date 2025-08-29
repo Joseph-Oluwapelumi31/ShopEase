@@ -3,9 +3,7 @@ import './App.css'
 import ProductList from './Productlist'
 function App() {
   return (
-      <div>
-          <ProductList />
-      </div>
+      <ProductList />
   )
 }
 
